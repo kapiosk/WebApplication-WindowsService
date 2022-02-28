@@ -23,7 +23,7 @@ namespace WebApplicationService.HostedServices
                 var waitTime = expression.GetNextOccurrence(DateTime.UtcNow) - DateTime.UtcNow;
 
                 if (waitTime is not null)
-                    await Task.Delay((int)waitTime.Value.TotalMilliseconds, stoppingToken);
+                    await Task.Delay(Convert.ToInt32(Math.Ceiling(waitTime.Value.TotalMilliseconds)), stoppingToken);
                 else
                     throw new TimeoutException("Worker wait time invalid");
 
