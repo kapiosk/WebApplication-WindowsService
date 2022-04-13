@@ -2,8 +2,8 @@ using Microsoft.Extensions.Hosting.WindowsServices;
 using WebApplicationService.HostedServices;
 using WebApplicationService.Services;
 //dotnet publish -c Release -r win-x64 --self-contained
-//sc.exe create MyApplicationWindowsService3 binPath= C:\Users\source\repos\WebApplicationService\bin\Release\net6.0\publish\WebApplicationService.exe
-//port 5000, need to see how to change this 
+//sc.exe create MyApplicationWindowsService3 binPath=C:\Users\kapiosk\source\repos\WebApplicationService\bin\Release\net6.0\win-x64\publish\WebApplicationService.exe
+//sc.exe delete MyApplicationWindowsService3
 WebApplicationOptions options = new()
 {
     Args = args,
@@ -23,6 +23,7 @@ if (WindowsServiceHelpers.IsWindowsService())
         }
     });
     builder.Host.UseWindowsService();
+    builder.WebHost.UseUrls("http://localhost:5298"); //Default without this is 5000
 }
 
 builder.Services.AddRazorPages();
